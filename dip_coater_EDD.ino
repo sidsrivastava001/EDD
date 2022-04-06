@@ -10,6 +10,7 @@ void setup() {
   int previous = 0; // the previous reading from the analog input
   int motorSpeed = 0;
   int cycles = 0;
+  int moveDist = 0;
 }
 
 int setSpeedMotor() {
@@ -19,13 +20,13 @@ int setSpeedMotor() {
   // set the motor speed:
   myStepper.setSpeed(motorSpeed);
   // step 1/100 of a revolution:
-   return motorSpeed
+  return motorSpeed
 }
 
 int goToPosition(int previous){
   int val = analogRead(0);
-  int moveDist = val-previous;
-  stepper.step(val - previous);
+  moveDist = val-previous;
+  stepper.step(moveDist);
   previous = val;
   return previous;
 }
@@ -35,8 +36,7 @@ int setCycles(int cycles) {
   return cycles
 }
 
-void loop() {
-  previous = goToPosition(previous, motorSpeed);
+void loop(int moveDist) {
   motorSpeed = setSpeedMotor();
   cycles = setCycles();
   for (int x = 0; x < cycles; x++) {
