@@ -43,4 +43,5 @@ void loop() {
     goToPosition();
     delay(5000);
     stepper.step(-moveDist);
+    delay(5000);
   }
