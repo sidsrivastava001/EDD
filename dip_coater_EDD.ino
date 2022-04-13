@@ -5,12 +5,17 @@ const int steps = 200;  // change this to fit the number of steps for your motor
 // initialize the stepper library on pins 8 through 11:
 Stepper myStepper(steps, 8, 9, 10, 11);
 
+int previous;
+int motorSpeed;
+int cycles;
+int moveDist;
+
 void setup() {
   // nothing to do inside the setup
-  int previous = 0; // the previous reading from the analog input
-  int motorSpeed = 0;
-  int cycles = 0;
-  int moveDist = 0;
+  previous = 0; // the previous reading from the analog input
+  motorSpeed = 0;
+  cycles = 0;
+  moveDist = 0;
 }
 
 int setSpeedMotor() {
