@@ -1,18 +1,23 @@
 <!-- <script src="firebase.js"></script> -->
 
 <body>
+<h1>Dip Coater Control Panel</h1>
+<h4>Welcome to the Dip Coater 2.0, the budget dip coater that will suit your essential laboratory needs!</h4>
+<h2>Operating Instructions:</h2>
+
+
 <form method="post" id="myForm">
     <label for="speed">Stepper Motor Input Speed: </label>
-    <input type="text" id="Ispeed" name="Ispeed"> <br> 
+    <input type="text" id="Ispeed" name="Ispeed"> <label> (m/s) | The speed in which the substrate is lowered into the solution.  </label> <br> <br> 
 
     <label for="speed">Stepper Motor Output Speed: </label>
-    <input type="text" id="Ospeed" name="Ospeed"> <br> 
+    <input type="text" id="Ospeed" name="Ospeed"> <label> (m/s) | The speed in which the substrate is raised out of the solution.</label> <br> <br>
 
     <label for="iTime">Immersion Time: </label> 
-    <input type="text" id="iTime" name="iTime"> <br>
+    <input type="text" id="iTime" name="iTime"> <label> (s) | The time in which the substrate is immersed in the solution. </label> <br> <br>
 
     <label for="dTime">Drying Time: </label> 
-    <input type="text" id="dTime" name="dTime"> <br>
+    <input type="text" id="dTime" name="dTime"> <label> (s) | The time in which the substrate is held still outside the solution. </label> <br> <br>
     
     <input type="submit" value="Submit"> <br>
 </form>
@@ -42,7 +47,7 @@
      
     document.getElementById('myForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        set(ref(db, 'users/' + Math.random().toString(36).slice(2, 7)), {
+        set(ref(db, 'users/'), {
             Input: document.getElementById('Ispeed').value,
             Output: document.getElementById('Ospeed').value,
             Immersion: document.getElementById('iTime').value,
