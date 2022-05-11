@@ -47,7 +47,7 @@
      
     document.getElementById('myForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        set(ref(db, 'users/'), {
+        set(ref(db, 'trials/'), {
             Input: document.getElementById('Ispeed').value,
             Output: document.getElementById('Ospeed').value,
             Immersion: document.getElementById('iTime').value,
@@ -60,7 +60,7 @@
 
     // read data from firebase
     const dbRef = ref(getDatabase(app));
-    get(child(dbRef, 'users/')).then((snapshot) => {
+    get(child(dbRef, 'trials')).then((snapshot) => {
         if (snapshot.exists()) {
             Object.keys(snapshot.val()).forEach((key) => {
                 console.log(`Input: ${snapshot.val()[key].Ispeed}`);
