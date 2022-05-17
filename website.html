@@ -6,6 +6,7 @@
 <h2>Operating Instructions:</h2>
 
 
+
 <form method="post" id="myForm">
     <label for="speed">Stepper Motor Input Speed: </label>
     <input type="text" id="Ispeed" name="Ispeed"> <label> (m/s) | The speed in which the substrate is lowered into the solution.  </label> <br> <br> 
@@ -27,6 +28,8 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js";
     import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-database.js";
      
+    var isON = false
+    console.log(isON)
     // Paste the code from Firebase
     const firebaseConfig = {
         apiKey: "AIzaSyCXxpDEQ_RcDfbcjpO95FZhTGDDWlHKgEw",
@@ -47,11 +50,13 @@
      
     document.getElementById('myForm').addEventListener('submit', function(e) {
         e.preventDefault();
+        var isON = true
         set(ref(db, 'trials/'), {
             Input: document.getElementById('Ispeed').value,
             Output: document.getElementById('Ospeed').value,
             Immersion: document.getElementById('iTime').value,
-            Drying: document.getElementById('dTime').value
+            Drying: document.getElementById('dTime').value,
+            On: isON
         });
      
         alert('Your form is submitted');
