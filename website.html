@@ -1,19 +1,87 @@
-<script src="firebase.js"></script>
+<!-- <script src="firebase.js"></script> -->
 
-<form id='myForm'>
-    <label for="speed">Stepper Motor Speed: </label>
-    <input type="text" id="speed" name="speed"> <br> 
+<body>
+<h1>Dip Coater Control Panel</h1>
+<h4>Welcome to the Big Steppa, the budget dip coater that will suit your essential laboratory needs!</h4>
+<h2>Operating Instructions:</h2>
+
+
+
+<form method="post" id="myForm">
+    <label for="speed">Stepper Motor Input Speed: </label>
+    <input type="text" id="Ispeed" name="Ispeed"> <label> (m/s) | The speed in which the substrate is lowered into the solution.  </label> <br> <br> 
+
+    <label for="speed">Stepper Motor Output Speed: </label>
+    <input type="text" id="Ospeed" name="Ospeed"> <label> (m/s) | The speed in which the substrate is raised out of the solution.</label> <br> <br>
 
     <label for="iTime">Immersion Time: </label> 
-    <input type="text" id="iTime" name="iTime"> <br>
+    <input type="text" id="iTime" name="iTime"> <label> (s) | The time in which the substrate is immersed in the solution. </label> <br> <br>
 
     <label for="dTime">Drying Time: </label> 
-    <input type="text" id="dTime" name="dTime"> <br>
-
-    <label for="distance">Distance: </label> 
-    <input type="text" id="distance" name="distance">
+    <input type="text" id="dTime" name="dTime"> <label> (s) | The time in which the substrate is held still outside the solution. </label> <br> <br>
     
     <input type="submit" value="Submit"> <br>
 </form>
-  
-<script src="firebase.js"></script>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js";
+    import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-database.js";
+     
+    var isON = false
+    console.log(isON)
+    // Paste the code from Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyCXxpDEQ_RcDfbcjpO95FZhTGDDWlHKgEw",
+        authDomain: "dip-coater.firebaseapp.com",
+        databaseURL: "https://dip-coater-default-rtdb.firebaseio.com",
+        projectId: "dip-coater",
+        storageBucket: "dip-coater.appspot.com",
+        messagingSenderId: "562703692753",
+        appId: "1:562703692753:web:4d36180b7ec03ba3a666f0",
+        measurementId: "G-8ZJYBQB7NY"
+    };
+     
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+     
+    // Get a reference to the database service
+    const db = getDatabase(app);
+     
+    document.getElementById('myForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var isON = true
+        set(ref(db, 'trials/'), {
+            Input: document.getElementById('Ispeed').value,
+            Output: document.getElementById('Ospeed').value,
+            Immersion: document.getElementById('iTime').value,
+            Drying: document.getElementById('dTime').value,
+            On: isON
+        });
+     
+        alert('Your form is submitted');
+        document.getElementById('myForm').reset();
+    });
+
+    // read data from firebase
+    const dbRef = ref(getDatabase(app));
+    get(child(dbRef, 'trials')).then((snapshot) => {
+        if (snapshot.exists()) {
+            Object.keys(snapshot.val()).forEach((key) => {
+                console.log(`Input: ${snapshot.val()[key].Ispeed}`);
+                console.log(`Output: ${snapshot.val()[key].Ospeed}`);
+                console.log(`Immersion: ${snapshot.val()[key].iTime}`);
+                console.log(`Drying: ${snapshot.val()[key].dTime}`);
+            });
+        } else {
+            console.log("No data available");
+        }
+        }).catch((error) => {
+            console.error(error);
+    });
+
+</script>
+
+</body>
+
+<!-- <script src="firebase.js"></script> -->
